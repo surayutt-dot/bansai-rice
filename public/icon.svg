@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="100" fill="#15803d"/>
+  <!-- รวงข้าวสีทอง -->
+  <path d="M256 420 C 256 300, 260 160, 256 90" stroke="#fef08a" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <!-- เมล็ดข้าว -->
+  <ellipse cx="220" cy="140" rx="36" ry="18" transform="rotate(-35 220 140)" fill="#facc15"/>
+  <ellipse cx="292" cy="140" rx="36" ry="18" transform="rotate(35 292 140)" fill="#facc15"/>
+  <ellipse cx="210" cy="200" rx="40" ry="20" transform="rotate(-30 210 200)" fill="#facc15"/>
+  <ellipse cx="302" cy="200" rx="40" ry="20" transform="rotate(30 302 200)" fill="#facc15"/>
+  <ellipse cx="205" cy="265" rx="42" ry="22" transform="rotate(-25 205 265)" fill="#facc15"/>
+  <ellipse cx="307" cy="265" rx="42" ry="22" transform="rotate(25 307 265)" fill="#facc15"/>
+  <ellipse cx="215" cy="330" rx="40" ry="22" transform="rotate(-20 215 330)" fill="#facc15"/>
+  <ellipse cx="297" cy="330" rx="40" ry="22" transform="rotate(20 297 330)" fill="#facc15"/>
+  <!-- ตัวหนังสือ -->
+  <text x="256" y="470" font-family="sans-serif" font-size="44" font-weight="bold" fill="#ffffff" text-anchor="middle">บ้านทราย</text>
+</svg>

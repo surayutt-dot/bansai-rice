@@ -1,0 +1,21 @@
+{
+  "name": "ศูนย์ข้าวชุมชนตำบลบ้านทราย",
+  "short_name": "ศูนย์ข้าวบ้านทราย",
+  "description": "ระบบบัญชีและคลังสินค้า ศูนย์ข้าวชุมชนตำบลบ้านทราย อ.บ้านหมี่ จ.ลพบุรี",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#15803d",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
