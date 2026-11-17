@@ -503,7 +503,9 @@
 
       updateConnBanner(true, '⏳ กำลังดึงข้อมูลจาก Google Sheets...');
       try {
-        const res = await fetch(appState.apiUrl);
+        // เติม ?t= เพื่อป้องกันเบราว์เซอร์จำ Cache เก่า
+        const cacheBuster = (appState.apiUrl.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
+        const res = await fetch(appState.apiUrl + cacheBuster, { cache: 'no-store' });
         const json = await res.json();
         if (json.success) {
           appState.products = json.data.products || [];
@@ -514,7 +516,7 @@
           appState.totalBuyAll = json.data.totalBuyAll || 0;
           appState.netProfit = json.data.netProfit || (appState.totalSalesAll - appState.totalBuyAll);
           appState.recentTx = json.data.recentTx || [];
-          updateConnBanner(true, '✅ เชื่อมต่อ Google Sheets เรียบร้อย');
+          updateConnBanner(true, '✅ เชื่อมต่อ Google Sheets เรียบร้อย (ข้อมูลล่าสุด)');
           renderAll();
         }
       } catch (err) {
@@ -666,11 +668,21 @@
         alert('✅ บันทึกในโหมดจำลองเรียบร้อย (เชื่อมต่อ Google Sheets เพื่อบันทึกจริง)');
       }
 
+      // อัปเดตสต็อกและตัวเลขบนหน้าจอทันที ไม่ต้องรอนาน
+      const targetP = appState.products.find(p => p.name === opt.dataset.name);
+      if (targetP) {
+        targetP.stock_qty = Number((Number(targetP.stock_qty) + qty).toFixed(2));
+      }
+      appState.buyToday = Number((Number(appState.buyToday) + total).toFixed(2));
+      appState.totalBuyAll = Number((Number(appState.totalBuyAll) + total).toFixed(2));
+      appState.netProfit = Number((appState.totalSalesAll - appState.totalBuyAll).toFixed(2));
+      renderAll();
+
       document.getElementById('buy-form').reset();
       calcBuyTotal();
       btn.disabled = false;
       btn.textContent = '💾 บันทึกลง Google Sheets ทันที';
-      await refreshData();
+      setTimeout(refreshData, 1500);
       switchTab('dashboard');
     }
 
@@ -713,11 +725,21 @@
         alert('✅ บันทึกในโหมดจำลองเรียบร้อย (เชื่อมต่อ Google Sheets เพื่อบันทึกจริง)');
       }
 
+      // อัปเดตสต็อกและตัวเลขบนหน้าจอทันที ไม่ต้องรอนาน
+      const targetP = appState.products.find(p => p.name === opt.dataset.name);
+      if (targetP) {
+        targetP.stock_qty = Number((Number(targetP.stock_qty) - qty).toFixed(2));
+      }
+      appState.salesToday = Number((Number(appState.salesToday) + total).toFixed(2));
+      appState.totalSalesAll = Number((Number(appState.totalSalesAll) + total).toFixed(2));
+      appState.netProfit = Number((appState.totalSalesAll - appState.totalBuyAll).toFixed(2));
+      renderAll();
+
       document.getElementById('sell-form').reset();
       calcSellTotal();
       btn.disabled = false;
       btn.textContent = '💾 บันทึกลง Google Sheets & ตัดสต็อก';
-      await refreshData();
+      setTimeout(refreshData, 1500);
       switchTab('dashboard');
     }
 
