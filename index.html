@@ -13,11 +13,11 @@
   <meta name="apple-mobile-web-app-title" content="ศูนย์ข้าวบ้านทราย">
   <link rel="icon" type="image/svg+xml" href="public/icon.svg">
 
-  <!-- Tailwind CSS & Google Fonts (Prompt ตัวหนังสืออ่านง่าย คมชัด) -->
+  <!-- Tailwind CSS & Google Fonts (Prompt ตัวหนังสือใหญ่ คมชัด แตะง่าย) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -28,7 +28,6 @@
     .safe-bottom {
       padding-bottom: env(safe-area-inset-bottom, 1.5rem);
     }
-    /* ปรับแต่ง Dropdown และ Input ให้แตะง่าย */
     select, input {
       font-size: 17px !important;
     }
@@ -36,7 +35,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- แถบด้านบนสุด (HEADER) ตัวหนังสือใหญ่ ชัดเจน -->
+  <!-- แถบด้านบนสุด (HEADER) -->
   <header class="bg-gradient-to-r from-emerald-800 to-green-700 text-white shadow-md sticky top-0 z-40">
     <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -71,18 +70,20 @@
   </div>
 
   <!-- เนื้อหาหลัก (MAIN CONTENT) -->
-  <main class="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-5 pb-28 sm:pb-12">
+  <main class="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-5 pb-32 sm:pb-16">
 
-    <!-- 1. แท็บ: ภาพรวม & สรุปการเงิน (DASHBOARD) -->
+    <!-- ============================================== -->
+    <!-- 1. แท็บ: ภาพรวม & สรุปด่วน (DASHBOARD) -->
+    <!-- ============================================== -->
     <section id="tab-dashboard" class="tab-content space-y-4">
       
-      <!-- การ์ดตัวเลขงบการเงิน ตัวใหญ่พิเศษ ไม่ต้องเพ่ง -->
+      <!-- การ์ดตัวเลขสำคัญ -->
       <div class="grid grid-cols-2 gap-3 sm:gap-4">
         <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200">
           <div class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-500">
             <span>💰</span> ยอดขายสะสม
           </div>
-          <div class="mt-2 text-2xl sm:text-3xl font-bold text-emerald-600" id="dash-sales-all">฿0</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-extrabold text-emerald-600" id="dash-sales-all">฿0</div>
           <div class="text-[11px] sm:text-xs text-slate-400 mt-1">รายได้จากการขายทั้งหมด</div>
         </div>
 
@@ -90,21 +91,24 @@
           <div class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-500">
             <span>🌾</span> ยอดรับซื้อสะสม
           </div>
-          <div class="mt-2 text-2xl sm:text-3xl font-bold text-amber-600" id="dash-buy-all">฿0</div>
-          <div class="text-[11px] sm:text-xs text-slate-400 mt-1">เงินรับซื้อข้าวเปลือก</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-extrabold text-amber-600" id="dash-buy-all">฿0</div>
+          <div class="text-[11px] sm:text-xs text-slate-400 mt-1">ต้นทุนรับซื้อข้าวเปลือก</div>
         </div>
 
+        <!-- การ์ดกำไรสุทธิ & ปุ่มเปิดดูงบการเงิน -->
         <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200 col-span-2 bg-gradient-to-br from-emerald-50/50 to-blue-50/50">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-semibold text-slate-600">📊 กำไร (ขาดทุน) สุทธิ Real-time</span>
-            <span class="text-[11px] text-blue-700 font-semibold bg-blue-100 px-2 py-0.5 rounded-lg">งบการเงินอัตโนมัติ</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-700">📊 กำไร (ขาดทุน) สุทธิ Real-time</span>
+            <button onclick="switchTab('financials')" class="text-xs font-bold text-blue-700 bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded-xl transition">
+              ดูงบการเงินเต็ม →
+            </button>
           </div>
           <div class="mt-2 text-3xl sm:text-4xl font-extrabold text-blue-700" id="dash-net-profit">฿0</div>
-          <div class="text-xs text-slate-500 mt-1">คำนวณจาก (รายได้ขาย - ต้นทุนรับซื้อข้าว)</div>
+          <div class="text-xs text-slate-500 mt-1">คำนวณจาก (รายได้รวม - ต้นทุนรับซื้อ)</div>
         </div>
       </div>
 
-      <!-- 2 ปุ่มกดด่วนขนาดใหญ่พิเศษ สำหรับมือถือ (ปุ่มใหญ่ แตะง่าย ไม่กดพลาด) -->
+      <!-- 2 ปุ่มกดด่วนขนาดใหญ่พิเศษ แตะง่าย ไม่กดพลาด -->
       <div class="space-y-3 pt-1">
         <button onclick="switchTab('buy')" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold p-5 rounded-3xl shadow-md flex items-center justify-between active:scale-[0.98] transition">
           <div class="flex items-center gap-4 text-left">
@@ -113,7 +117,7 @@
             </div>
             <div>
               <div class="text-xl sm:text-2xl font-bold">บันทึกรับซื้อข้าวเปลือก</div>
-              <div class="text-xs sm:text-sm text-amber-100 font-normal">ชั่งน้ำหนัก วัดความชื้น จ่ายเงินเกษตรกร</div>
+              <div class="text-xs sm:text-sm text-amber-100 font-normal">ชั่งน้ำหนัก วัดความชื้น เพิ่มเข้าสต็อก</div>
             </div>
           </div>
           <span class="text-2xl text-amber-200">➔</span>
@@ -133,11 +137,13 @@
         </button>
       </div>
 
-      <!-- รายการบิลล่าสุด -->
+      <!-- รายการบิลล่าสุด (แสดงทั้งรับซื้อและขาย) -->
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-5 mt-4">
         <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-          <h2 class="font-bold text-slate-800 text-base sm:text-lg">📑 บิลรายการล่าสุด</h2>
-          <span class="text-xs text-slate-400">ซิงค์กับ Google Sheets</span>
+          <h2 class="font-bold text-slate-800 text-base sm:text-lg">📑 รายการล่าสุด (ซื้อ & ขาย)</h2>
+          <button onclick="switchTab('history')" class="text-xs font-bold text-emerald-700 hover:underline">
+            ดูทั้งหมด →
+          </button>
         </div>
         <div id="dash-recent-tx" class="divide-y divide-slate-100">
           <p class="text-sm text-slate-400 py-3 text-center">กำลังโหลดรายการ...</p>
@@ -145,18 +151,19 @@
       </div>
     </section>
 
+    <!-- ============================================== -->
     <!-- 2. แท็บ: บันทึกรับซื้อข้าวเปลือก (BUY) -->
+    <!-- ============================================== -->
     <section id="tab-buy" class="tab-content hidden space-y-4">
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-5 sm:p-7">
         <div class="pb-3 border-b border-slate-100">
           <h2 class="text-xl sm:text-2xl font-bold text-amber-700 flex items-center gap-2">
             <span>🌾</span> รับซื้อข้าวเปลือกจากชาวนา
           </h2>
-          <p class="text-sm text-slate-500 mt-1">กรอกข้อมูลน้ำหนักและราคา ระบบจะบันทึกลง Google Sheets ทันที</p>
+          <p class="text-sm text-slate-500 mt-1">กรอกน้ำหนักและราคา ระบบจะบันทึกลงชีตและเพิ่มสต็อกทันที</p>
         </div>
 
         <form id="buy-form" onsubmit="handleSaveBuy(event)" class="mt-5 space-y-5">
-          <!-- สมาชิกหรือชาวนา -->
           <div>
             <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">1. สมาชิกผู้ขายข้าว *</label>
             <select id="buy-member-id" onchange="handleSelectMember('buy')" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3.5 text-base sm:text-lg font-medium text-slate-800 focus:outline-none focus:border-amber-500">
@@ -165,7 +172,6 @@
             <input type="text" id="buy-customer-name" placeholder="หรือพิมพ์ชื่อชาวนา (กรณีไม่ใช่สมาชิก)" class="mt-2 w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3 text-sm sm:text-base">
           </div>
 
-          <!-- ชนิดข้าวเปลือก -->
           <div>
             <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">2. ชนิดข้าวเปลือกที่รับซื้อ *</label>
             <select id="buy-product-id" onchange="handleSelectProduct('buy')" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3.5 text-base sm:text-lg font-medium text-slate-800 focus:outline-none focus:border-amber-500" required>
@@ -173,7 +179,6 @@
             </select>
           </div>
 
-          <!-- น้ำหนัก และ ราคารับซื้อ -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">3. น้ำหนักชั่งสุทธิ *</label>
@@ -188,7 +193,6 @@
             </div>
           </div>
 
-          <!-- ความชื้น และ หักสิ่งเจือปน -->
           <div class="bg-amber-50/70 p-4 rounded-2xl border-2 border-amber-200 grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs sm:text-sm font-bold text-amber-900 mb-1">ความชื้น (%)</label>
@@ -200,7 +204,6 @@
             </div>
           </div>
 
-          <!-- กล่องยอดเงินสุทธิ ตัวใหญ่พิเศษ -->
           <div class="bg-slate-900 text-white p-5 rounded-3xl flex items-center justify-between shadow-md">
             <div>
               <span class="text-xs sm:text-sm text-slate-300 font-medium">เงินสดจ่ายสุทธิให้ชาวนา</span>
@@ -209,15 +212,16 @@
             <div class="text-2xl sm:text-3xl font-extrabold text-amber-400" id="buy-total-display">฿0.00</div>
           </div>
 
-          <!-- ปุ่มกดยืนยัน ขนาดใหญ่พิเศษ สีส้มทอง -->
           <button type="submit" id="buy-submit-btn" class="w-full bg-amber-600 hover:bg-amber-700 active:scale-[0.98] text-white font-extrabold py-4 px-6 rounded-2xl shadow-lg text-lg sm:text-xl flex items-center justify-center gap-2 transition">
-            <span>💾 บันทึกลง Google Sheets ทันที</span>
+            <span>💾 บันทึกลง Google Sheets & เพิ่มสต็อก</span>
           </button>
         </form>
       </div>
     </section>
 
+    <!-- ============================================== -->
     <!-- 3. แท็บ: บันทึกขายเมล็ดพันธุ์ / ข้าวสาร (SELL) -->
+    <!-- ============================================== -->
     <section id="tab-sell" class="tab-content hidden space-y-4">
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-5 sm:p-7">
         <div class="pb-3 border-b border-slate-100">
@@ -228,7 +232,6 @@
         </div>
 
         <form id="sell-form" onsubmit="handleSaveSell(event)" class="mt-5 space-y-5">
-          <!-- ผู้ซื้อ -->
           <div>
             <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">1. ผู้ซื้อ (สมาชิกหรือทั่วไป) *</label>
             <select id="sell-member-id" onchange="handleSelectMember('sell')" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3.5 text-base sm:text-lg font-medium text-slate-800 focus:outline-none focus:border-emerald-500">
@@ -237,7 +240,6 @@
             <input type="text" id="sell-customer-name" placeholder="หรือพิมพ์ชื่อลูกค้าทั่วไป" class="mt-2 w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3 text-sm sm:text-base">
           </div>
 
-          <!-- สินค้า / เมล็ดพันธุ์ -->
           <div>
             <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">2. เลือกเมล็ดพันธุ์ / ข้าวสาร *</label>
             <select id="sell-product-id" onchange="handleSelectProduct('sell')" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3.5 text-base sm:text-lg font-medium text-slate-800 focus:outline-none focus:border-emerald-500" required>
@@ -246,7 +248,6 @@
             <div id="sell-stock-hint" class="text-xs sm:text-sm font-semibold text-emerald-700 mt-1.5">คงเหลือในคลัง: -</div>
           </div>
 
-          <!-- จำนวน และ ราคาขาย -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">3. จำนวนที่ซื้อ *</label>
@@ -261,7 +262,6 @@
             </div>
           </div>
 
-          <!-- วิธีชำระเงิน -->
           <div>
             <label class="block text-sm sm:text-base font-bold text-slate-700 mb-1.5">5. การรับชำระเงิน</label>
             <div class="grid grid-cols-2 gap-3">
@@ -276,7 +276,6 @@
             </div>
           </div>
 
-          <!-- กล่องยอดเงินรับสุทธิ -->
           <div class="bg-slate-900 text-white p-5 rounded-3xl flex items-center justify-between shadow-md">
             <div>
               <span class="text-xs sm:text-sm text-slate-300 font-medium">ยอดเงินรับสุทธิ</span>
@@ -285,7 +284,6 @@
             <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400" id="sell-total-display">฿0.00</div>
           </div>
 
-          <!-- ปุ่มกดยืนยัน สีเขียวมรกต ตัวใหญ่ -->
           <button type="submit" id="sell-submit-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-extrabold py-4 px-6 rounded-2xl shadow-lg text-lg sm:text-xl flex items-center justify-center gap-2 transition">
             <span>💾 บันทึกลง Google Sheets & ตัดสต็อก</span>
           </button>
@@ -293,80 +291,167 @@
       </div>
     </section>
 
-    <!-- 4. แท็บ: คลังสินค้า (INVENTORY) -->
+    <!-- ============================================== -->
+    <!-- 4. แท็บ: คลังสินค้า & ปรับราคา (INVENTORY) -->
+    <!-- ============================================== -->
     <section id="tab-inventory" class="tab-content hidden space-y-4">
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-6">
-        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
           <div>
             <h2 class="text-lg sm:text-xl font-bold text-slate-800">📦 คลังเมล็ดพันธุ์และสินค้า</h2>
-            <p class="text-xs sm:text-sm text-slate-500">ซิงค์จากแผ่นงาน 'คลังสินค้า'</p>
+            <p class="text-xs sm:text-sm text-slate-500">แตะปุ่ม "แก้ไข" เพื่อเปลี่ยนราคาหรือปรับจำนวนคงเหลือได้ทันที</p>
           </div>
-          <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl flex items-center gap-1">
-            🔄 รีเฟรช
-          </button>
+          <div class="flex gap-2">
+            <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl flex items-center gap-1">
+              🔄 รีเฟรช
+            </button>
+            <button onclick="openAddProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl shadow-sm">
+              ➕ เพิ่มสินค้าใหม่
+            </button>
+          </div>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-sm sm:text-base">
-            <thead>
-              <tr class="bg-slate-100 text-slate-600 border-b border-slate-200 font-bold">
-                <th class="py-3 px-3">ชื่อสินค้า / พันธุ์ข้าว</th>
-                <th class="py-3 px-2 text-right">คงเหลือ</th>
-                <th class="py-3 px-3 text-right">ราคาขาย</th>
-                <th class="py-3 px-2 text-center">สถานะ</th>
-              </tr>
-            </thead>
-            <tbody id="inventory-table-body" class="divide-y divide-slate-100">
-              <tr><td colspan="4" class="py-4 text-center text-slate-400">กำลังโหลดข้อมูลคลัง...</td></tr>
-            </tbody>
-          </table>
+        <div id="inventory-card-list" class="space-y-3">
+          <p class="text-sm text-slate-400 py-4 text-center">กำลังโหลดข้อมูลคลัง...</p>
         </div>
       </div>
     </section>
 
-    <!-- 5. แท็บ: สมาชิก (MEMBERS) -->
+    <!-- ============================================== -->
+    <!-- 5. แท็บ: สมาชิก (MEMBERS - เพิ่ม/แก้ไข/ลบ) -->
+    <!-- ============================================== -->
     <section id="tab-members" class="tab-content hidden space-y-4">
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-6">
-        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
           <div>
             <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 ทะเบียนสมาชิกศูนย์ข้าว</h2>
-            <p class="text-xs sm:text-sm text-slate-500">ซิงค์จากแผ่นงาน 'ทะเบียนสมาชิก'</p>
+            <p class="text-xs sm:text-sm text-slate-500">สามารถเพิ่ม แก้ไขข้อมูล หรือลบสมาชิกได้จากมือถือ</p>
           </div>
-          <button onclick="openAddMemberModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl shadow-sm">
-            + เพิ่มสมาชิก
+          <button onclick="openAddMemberModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm">
+            ➕ เพิ่มสมาชิก
           </button>
         </div>
 
-        <div id="members-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div id="members-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <p class="text-sm text-slate-400 py-4 text-center col-span-2">กำลังโหลดทะเบียนสมาชิก...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 6. แท็บ: ประวัติการซื้อ-ขาย (HISTORY) -->
+    <!-- ============================================== -->
+    <section id="tab-history" class="tab-content hidden space-y-4">
+      <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-6">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-800">📑 ประวัติการซื้อ-ขายทั้งหมด</h2>
+            <p class="text-xs sm:text-sm text-slate-500">ประวัติการรับซื้อข้าวเปลือก และการขายเมล็ดพันธุ์ย้อนหลัง</p>
+          </div>
+          <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl">
+            🔄 รีเฟรช
+          </button>
+        </div>
+
+        <div id="full-history-list" class="space-y-3">
+          <p class="text-sm text-slate-400 py-4 text-center">กำลังโหลดประวัติบิล...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 7. แท็บ: เมนูงบการเงินเต็มรูปแบบ (FINANCIALS) -->
+    <!-- ============================================== -->
+    <section id="tab-financials" class="tab-content hidden space-y-4">
+      <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-5 sm:p-7 space-y-5">
+        <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <span>📊</span> รายงานงบการเงินชุมชน
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">งบกำไรขาดทุน & สรุปมูลค่ากลุ่มศูนย์ข้าวบ้านทราย</p>
+          </div>
+          <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl">
+            🔄 อัปเดต
+          </button>
+        </div>
+
+        <!-- รายได้ vs ค่าใช้จ่าย -->
+        <div class="space-y-3">
+          <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs sm:text-sm font-bold text-emerald-800">1. รายได้จากการขายสะสม (A)</span>
+              <div class="text-xs text-slate-500">ขายเมล็ดพันธุ์, ข้าวสาร, รำ, แกลบ</div>
+            </div>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-700" id="fin-sales">฿0</div>
+          </div>
+
+          <div class="bg-amber-50 border-2 border-amber-200 p-4 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs sm:text-sm font-bold text-amber-800">2. ต้นทุนการรับซื้อข้าวสะสม (B)</span>
+              <div class="text-xs text-slate-500">เงินจ่ายรับซื้อข้าวเปลือกจากเกษตรกร</div>
+            </div>
+            <div class="text-xl sm:text-2xl font-extrabold text-amber-700" id="fin-buy">฿0</div>
+          </div>
+
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-5 rounded-3xl shadow-md flex items-center justify-between">
+            <div>
+              <span class="text-sm font-bold text-blue-100">3. กำไร (ขาดทุน) สุทธิ (A - B)</span>
+              <div class="text-xs text-blue-200">ผลประกอบการของศูนย์ข้าว</div>
+            </div>
+            <div class="text-2xl sm:text-3xl font-black text-yellow-300" id="fin-net-profit">฿0</div>
+          </div>
+        </div>
+
+        <!-- ทรัพย์สินและปันผล -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <div class="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-600">📦 มูลค่าสินค้าคงเหลือในคลัง</span>
+            <div class="text-xl sm:text-2xl font-bold text-purple-700 mt-1" id="fin-inv-value">฿0</div>
+            <div class="text-xs text-slate-400 mt-0.5">คิดตามราคาทุนของเมล็ดพันธุ์และข้าวในคลัง</div>
+          </div>
+
+          <div class="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-600">👥 หุ้นรวม & ปันผลประมาณการ</span>
+            <div class="text-xl sm:text-2xl font-bold text-blue-700 mt-1" id="fin-shares-dividend">0 หุ้น</div>
+            <div class="text-xs text-slate-400 mt-0.5" id="fin-dividend-rate">ปันผลประมาณการ: - บาท/หุ้น</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-100 p-4 rounded-2xl text-xs text-slate-600 leading-relaxed">
+          💡 <b>คำแนะนำ:</b> งบการเงินนี้ซิงค์ตรงกับแผ่นงาน <b>"งบกำไรขาดทุน"</b> ใน Google Sheets หากศูนย์ข้าวมีค่าใช้จ่ายอื่นๆ เช่น ค่าไฟ หรือค่ากระสอบ สามารถพิมพ์เพิ่มลงในตาราง Google Sheets เพื่อนำมาหักในงบการเงินได้โดยตรงครับ
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- แถบนำทางด้านล่างสำหรับมือถือ (BOTTOM NAVIGATION) ปุ่มใหญ่ แตะสะดวก -->
+  <!-- แถบนำทางด้านล่างสำหรับมือถือ (BOTTOM NAVIGATION) แตะสะดวก -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-slate-200 z-50 safe-bottom sm:hidden shadow-2xl">
-    <div class="grid grid-cols-5 text-center py-2">
-      <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center py-1 text-emerald-700 font-bold">
+    <div class="grid grid-cols-6 text-center py-2">
+      <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center py-1 text-emerald-700 font-extrabold">
         <span class="text-2xl">📊</span>
-        <span class="text-xs mt-0.5">ภาพรวม</span>
+        <span class="text-[11px] mt-0.5">ภาพรวม</span>
       </button>
       <button onclick="switchTab('buy')" id="nav-btn-buy" class="flex flex-col items-center py-1 text-slate-400 font-semibold">
         <span class="text-2xl">🌾</span>
-        <span class="text-xs mt-0.5">รับซื้อ</span>
+        <span class="text-[11px] mt-0.5">รับซื้อ</span>
       </button>
       <button onclick="switchTab('sell')" id="nav-btn-sell" class="flex flex-col items-center py-1 text-slate-400 font-semibold">
         <span class="text-2xl">🛒</span>
-        <span class="text-xs mt-0.5">ขาย</span>
+        <span class="text-[11px] mt-0.5">ขาย</span>
       </button>
       <button onclick="switchTab('inventory')" id="nav-btn-inventory" class="flex flex-col items-center py-1 text-slate-400 font-semibold">
         <span class="text-2xl">📦</span>
-        <span class="text-xs mt-0.5">สต็อก</span>
+        <span class="text-[11px] mt-0.5">สต็อก</span>
+      </button>
+      <button onclick="switchTab('history')" id="nav-btn-history" class="flex flex-col items-center py-1 text-slate-400 font-semibold">
+        <span class="text-2xl">📑</span>
+        <span class="text-[11px] mt-0.5">ประวัติ</span>
       </button>
       <button onclick="switchTab('members')" id="nav-btn-members" class="flex flex-col items-center py-1 text-slate-400 font-semibold">
         <span class="text-2xl">👥</span>
-        <span class="text-xs mt-0.5">สมาชิก</span>
+        <span class="text-[11px] mt-0.5">สมาชิก</span>
       </button>
     </div>
   </nav>
@@ -374,20 +459,26 @@
   <!-- แถบนำทางสำหรับหน้าจอคอมพิวเตอร์ (DESKTOP BAR) -->
   <div class="hidden sm:block fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-3 z-30 shadow-md">
     <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <button onclick="switchTab('dashboard')" class="desktop-tab-btn px-4 py-2 rounded-xl text-sm font-bold text-emerald-800 bg-emerald-100" data-tab="dashboard">📊 ภาพรวม & งบการเงิน</button>
-        <button onclick="switchTab('buy')" class="desktop-tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="buy">🌾 รับซื้อข้าว</button>
-        <button onclick="switchTab('sell')" class="desktop-tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="sell">🛒 ขายเมล็ดพันธุ์</button>
-        <button onclick="switchTab('inventory')" class="desktop-tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="inventory">📦 คลังสต็อก</button>
-        <button onclick="switchTab('members')" class="desktop-tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="members">👥 สมาชิก</button>
+      <div class="flex items-center gap-1.5">
+        <button onclick="switchTab('dashboard')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-bold text-emerald-800 bg-emerald-100" data-tab="dashboard">📊 ภาพรวม</button>
+        <button onclick="switchTab('buy')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="buy">🌾 รับซื้อ</button>
+        <button onclick="switchTab('sell')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="sell">🛒 ขาย</button>
+        <button onclick="switchTab('inventory')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="inventory">📦 คลังสต็อก</button>
+        <button onclick="switchTab('history')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="history">📑 ประวัติบิล</button>
+        <button onclick="switchTab('financials')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="financials">📈 งบการเงิน</button>
+        <button onclick="switchTab('members')" class="desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100" data-tab="members">👥 สมาชิก</button>
       </div>
       <div class="text-xs text-slate-400">
-        ศูนย์ข้าวชุมชนตำบลบ้านทราย อ.บ้านหมี่ จ.ลพบุรี
+        ศูนย์ข้าวชุมชนบ้านทราย • อ.บ้านหมี่
       </div>
     </div>
   </div>
 
-  <!-- หน้าต่างตั้งค่า Google Sheets API URL -->
+  <!-- ============================================== -->
+  <!-- MODALS (หน้าต่างป๊อปอัปต่างๆ) -->
+  <!-- ============================================== -->
+
+  <!-- MODAL: ตั้งค่า Google Sheets API URL -->
   <div id="config-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between">
@@ -410,7 +501,7 @@
     </div>
   </div>
 
-  <!-- หน้าต่างเพิ่มสมาชิกใหม่ -->
+  <!-- MODAL: เพิ่มสมาชิกใหม่ -->
   <div id="add-member-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
       <h3 class="text-lg font-bold text-slate-800">➕ เพิ่มสมาชิกกลุ่มใหม่</h3>
@@ -439,15 +530,123 @@
     </div>
   </div>
 
-  <!-- ระบบประมวลผล JAVASCRIPT -->
+  <!-- MODAL: แก้ไขสมาชิก -->
+  <div id="edit-member-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+      <h3 class="text-lg font-bold text-slate-800">✏️ แก้ไขข้อมูลสมาชิก</h3>
+      <form onsubmit="handleSaveEditMember(event)" class="space-y-4 text-sm">
+        <input type="hidden" id="edit-member-code">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">ชื่อ-นามสกุล *</label>
+          <input type="text" id="edit-member-name" required class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">เบอร์โทรศัพท์</label>
+          <input type="text" id="edit-member-phone" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">ที่อยู่ / หมู่บ้าน</label>
+          <input type="text" id="edit-member-village" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">จำนวนหุ้น (หุ้น)</label>
+          <input type="number" id="edit-member-share" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeEditMemberModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 py-3 rounded-2xl font-bold text-slate-700 text-sm">ยกเลิก</button>
+          <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-sm shadow-md">บันทึกแก้ไข</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: แก้ไข/ปรับสต็อกสินค้า -->
+  <div id="edit-product-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+      <h3 class="text-lg font-bold text-slate-800">📦 แก้ไขราคา / สต็อกสินค้า</h3>
+      <form onsubmit="handleSaveEditProduct(event)" class="space-y-4 text-sm">
+        <input type="hidden" id="edit-prod-code">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">ชื่อสินค้า / ชนิดข้าว</label>
+          <input type="text" id="edit-prod-name" readonly class="w-full bg-slate-100 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-base font-semibold text-slate-600">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">ราคารับซื้อ (฿)</label>
+            <input type="number" step="any" id="edit-prod-buy" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base font-bold">
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">ราคาขาย (฿)</label>
+            <input type="number" step="any" id="edit-prod-sell" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base font-bold">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">จำนวนคงเหลือในคลังจริง *</label>
+          <input type="number" step="any" id="edit-prod-stock" required class="w-full border-2 border-emerald-400 bg-emerald-50/50 rounded-2xl px-3.5 py-2.5 text-xl font-extrabold text-emerald-800">
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeEditProductModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 py-3 rounded-2xl font-bold text-slate-700 text-sm">ยกเลิก</button>
+          <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-sm shadow-md">บันทึกสต็อก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: เพิ่มสินค้าใหม่ -->
+  <div id="add-product-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+      <h3 class="text-lg font-bold text-slate-800">➕ เพิ่มสินค้า / พันธุ์ข้าวใหม่</h3>
+      <form onsubmit="handleSaveNewProduct(event)" class="space-y-4 text-sm">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">ชื่อสินค้า / ชนิดพันธุ์ *</label>
+          <input type="text" id="new-prod-name" placeholder="เช่น เมล็ดพันธุ์ กข85" required class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">หมวดหมู่ *</label>
+            <select id="new-prod-category" class="w-full border-2 border-slate-200 rounded-2xl px-3 py-2.5 text-sm font-semibold">
+              <option value="เมล็ดพันธุ์">เมล็ดพันธุ์</option>
+              <option value="ข้าวเปลือก">ข้าวเปลือก</option>
+              <option value="ข้าวสาร">ข้าวสาร</option>
+              <option value="ผลพลอยได้">ผลพลอยได้ (รำ/แกลบ)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">หน่วยนับ *</label>
+            <input type="text" id="new-prod-unit" placeholder="กระสอบ / ตัน" required class="w-full border-2 border-slate-200 rounded-2xl px-3 py-2.5 text-base">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">ราคารับซื้อ (฿)</label>
+            <input type="number" step="any" id="new-prod-buy" value="0" class="w-full border-2 border-slate-200 rounded-2xl px-3 py-2.5 text-base">
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">ราคาขาย (฿)</label>
+            <input type="number" step="any" id="new-prod-sell" value="0" class="w-full border-2 border-slate-200 rounded-2xl px-3 py-2.5 text-base">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">จำนวนคงเหลือเริ่มต้น</label>
+          <input type="number" step="any" id="new-prod-stock" value="0" class="w-full border-2 border-slate-200 rounded-2xl px-3.5 py-2.5 text-base">
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeAddProductModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 py-3 rounded-2xl font-bold text-slate-700 text-sm">ยกเลิก</button>
+          <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-sm shadow-md">บันทึกสินค้า</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     const DEMO_PRODUCTS = [
-      { id: 1, name: 'เมล็ดพันธุ์ข้าว กข43 (คัดพิเศษ)', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 600, sell_price: 750, stock_qty: 120, min_alert: 20 },
-      { id: 2, name: 'เมล็ดพันธุ์ข้าว กข79', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 550, sell_price: 700, stock_qty: 85, min_alert: 15 },
-      { id: 3, name: 'เมล็ดพันธุ์ข้าวขาวดอกมะลิ 105', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 650, sell_price: 850, stock_qty: 95, min_alert: 20 },
-      { id: 4, name: 'ข้าวกล้อง กข43 บ้านทราย (5 กก.)', category: 'ข้าวสาร', unit: 'ถุง (5 กก.)', buy_price: 120, sell_price: 180, stock_qty: 200, min_alert: 30 },
-      { id: 5, name: 'ข้าวเปลือกสด กข43', category: 'ข้าวเปลือก', unit: 'ตัน', buy_price: 10500, sell_price: 0, stock_qty: 15, min_alert: 5 },
-      { id: 6, name: 'ข้าวเปลือกแห้ง (ความชื้นไม่เกิน 14%)', category: 'ข้าวเปลือก', unit: 'ตัน', buy_price: 12500, sell_price: 0, stock_qty: 20, min_alert: 5 }
+      { id: 1, code: 'P-001', name: 'เมล็ดพันธุ์ข้าว กข43 (คัดพิเศษ)', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 600, sell_price: 750, stock_qty: 120, min_alert: 20 },
+      { id: 2, code: 'P-002', name: 'เมล็ดพันธุ์ข้าว กข79', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 550, sell_price: 700, stock_qty: 85, min_alert: 15 },
+      { id: 3, code: 'P-003', name: 'เมล็ดพันธุ์ข้าวขาวดอกมะลิ 105', category: 'เมล็ดพันธุ์', unit: 'กระสอบ (25 กก.)', buy_price: 650, sell_price: 850, stock_qty: 95, min_alert: 20 },
+      { id: 4, code: 'P-004', name: 'ข้าวกล้อง กข43 บ้านทราย (5 กก.)', category: 'ข้าวสาร', unit: 'ถุง (5 กก.)', buy_price: 120, sell_price: 180, stock_qty: 200, min_alert: 30 },
+      { id: 5, code: 'P-007', name: 'ข้าวเปลือกสด กข43', category: 'ข้าวเปลือก', unit: 'ตัน', buy_price: 10500, sell_price: 0, stock_qty: 15, min_alert: 5 },
+      { id: 6, code: 'P-008', name: 'ข้าวเปลือกแห้ง (ความชื้นไม่เกิน 14%)', category: 'ข้าวเปลือก', unit: 'ตัน', buy_price: 12500, sell_price: 0, stock_qty: 20, min_alert: 5 }
     ];
 
     const DEMO_MEMBERS = [
@@ -465,7 +664,10 @@
       totalSalesAll: 0,
       totalBuyAll: 0,
       netProfit: 0,
-      recentTx: []
+      inventoryValue: 0,
+      totalShares: 0,
+      recentTx: [],
+      allTx: []
     };
 
     function switchTab(tabId) {
@@ -473,7 +675,7 @@
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
 
-      const navButtons = ['dashboard', 'buy', 'sell', 'inventory', 'members'];
+      const navButtons = ['dashboard', 'buy', 'sell', 'inventory', 'history', 'members'];
       navButtons.forEach(btn => {
         const el = document.getElementById('nav-btn-' + btn);
         if (el) {
@@ -485,12 +687,14 @@
 
       document.querySelectorAll('.desktop-tab-btn').forEach(btn => {
         btn.className = (btn.dataset.tab === tabId) 
-          ? 'desktop-tab-btn px-4 py-2 rounded-xl text-sm font-bold text-emerald-800 bg-emerald-100' 
-          : 'desktop-tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100';
+          ? 'desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-bold text-emerald-800 bg-emerald-100' 
+          : 'desktop-tab-btn px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100';
       });
 
       if (tabId === 'inventory') renderInventory();
       if (tabId === 'members') renderMembers();
+      if (tabId === 'history') renderFullHistory();
+      if (tabId === 'financials') renderFinancials();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -503,7 +707,6 @@
 
       updateConnBanner(true, '⏳ กำลังดึงข้อมูลจาก Google Sheets...');
       try {
-        // เติม ?t= เพื่อป้องกันเบราว์เซอร์จำ Cache เก่า
         const cacheBuster = (appState.apiUrl.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
         const res = await fetch(appState.apiUrl + cacheBuster, { cache: 'no-store' });
         const json = await res.json();
@@ -515,7 +718,10 @@
           appState.totalSalesAll = json.data.totalSalesAll || 0;
           appState.totalBuyAll = json.data.totalBuyAll || 0;
           appState.netProfit = json.data.netProfit || (appState.totalSalesAll - appState.totalBuyAll);
+          appState.inventoryValue = json.data.inventoryValue || 0;
+          appState.totalShares = json.data.totalShares || 0;
           appState.recentTx = json.data.recentTx || [];
+          appState.allTx = json.data.allTx || [];
           updateConnBanner(true, '✅ เชื่อมต่อ Google Sheets เรียบร้อย (ข้อมูลล่าสุด)');
           renderAll();
         }
@@ -550,22 +756,103 @@
       populateDropdowns();
       renderInventory();
       renderMembers();
+      renderFinancials();
+      renderRecentTransactions();
+    }
 
+    function renderRecentTransactions() {
       const recentEl = document.getElementById('dash-recent-tx');
       if (appState.recentTx.length > 0) {
-        recentEl.innerHTML = appState.recentTx.map(t => `
-          <div class="py-3 flex items-center justify-between text-sm sm:text-base">
-            <div>
-              <span class="font-bold text-slate-800">🛒 บิล #${t.bill_no}</span>
-              <div class="text-xs sm:text-sm text-slate-500">${t.customer} • ${t.item}</div>
+        recentEl.innerHTML = appState.recentTx.slice(0, 5).map(t => {
+          const isBuy = t.tx_type === 'buy';
+          const badge = isBuy 
+            ? '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg text-xs font-bold">🌾 รับซื้อ</span>'
+            : '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-lg text-xs font-bold">🛒 ขาย</span>';
+          const priceColor = isBuy ? 'text-amber-600' : 'text-emerald-600';
+          const prefix = isBuy ? '-฿' : '+฿';
+
+          return `
+            <div class="py-3 flex items-center justify-between text-sm sm:text-base">
+              <div>
+                <div class="flex items-center gap-2">
+                  ${badge}
+                  <span class="font-bold text-slate-800">#${t.bill_no}</span>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-500 mt-0.5">${t.customer} • ${t.item} (${t.qty} ${t.unit || ''})</div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold ${priceColor} text-base sm:text-lg">
+                  ${prefix}${Number(t.total_amount).toLocaleString()}
+                </div>
+                <div class="text-[11px] text-slate-400">${t.tx_date}</div>
+              </div>
             </div>
-            <div class="font-extrabold text-emerald-600 text-base sm:text-lg">
-              +฿${Number(t.total_amount).toLocaleString()}
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } else {
         recentEl.innerHTML = '<p class="text-sm text-slate-400 py-3 text-center">ยังไม่มีประวัติบิล</p>';
+      }
+    }
+
+    function renderFullHistory() {
+      const listEl = document.getElementById('full-history-list');
+      const txs = appState.allTx.length > 0 ? appState.allTx : appState.recentTx;
+
+      if (!txs.length) {
+        listEl.innerHTML = '<p class="text-sm text-slate-400 py-4 text-center">ยังไม่มีประวัติการซื้อ-ขายในระบบ</p>';
+        return;
+      }
+
+      listEl.innerHTML = txs.map(t => {
+        const isBuy = t.tx_type === 'buy';
+        const badge = isBuy 
+          ? '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-xl text-xs font-bold">🌾 รับซื้อข้าวเปลือก</span>'
+          : '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-xl text-xs font-bold">🛒 ขายสินค้า</span>';
+        const priceColor = isBuy ? 'text-amber-600' : 'text-emerald-600';
+        const prefix = isBuy ? '-฿' : '+฿';
+
+        return `
+          <div class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-4 text-sm sm:text-base space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                ${badge}
+                <span class="font-bold text-slate-800">#${t.bill_no}</span>
+              </div>
+              <span class="text-xs text-slate-400 font-semibold">${t.tx_date}</span>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <div>
+                <div class="font-bold text-slate-900">${t.customer}</div>
+                <div class="text-xs sm:text-sm text-slate-600">${t.item} • ${t.qty} ${t.unit || ''}</div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold ${priceColor} text-lg">
+                  ${prefix}${Number(t.total_amount).toLocaleString()}
+                </div>
+                <span class="text-[11px] text-slate-400">${t.payment_method || 'เงินสด'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFinancials() {
+      document.getElementById('fin-sales').textContent = '฿' + Number(appState.totalSalesAll).toLocaleString();
+      document.getElementById('fin-buy').textContent = '฿' + Number(appState.totalBuyAll).toLocaleString();
+      
+      const profit = Number(appState.netProfit || (appState.totalSalesAll - appState.totalBuyAll));
+      document.getElementById('fin-net-profit').textContent = (profit >= 0 ? '+' : '') + '฿' + profit.toLocaleString();
+      document.getElementById('fin-inv-value').textContent = '฿' + Number(appState.inventoryValue).toLocaleString();
+      
+      const shares = Number(appState.totalShares || appState.members.reduce((acc, m) => acc + Number(m.share_count || 0), 0));
+      document.getElementById('fin-shares-dividend').textContent = shares.toLocaleString() + ' หุ้น';
+      
+      if (shares > 0 && profit > 0) {
+        const perShare = (profit / shares).toFixed(2);
+        document.getElementById('fin-dividend-rate').textContent = `ปันผลเฉลี่ยประมาณ: ฿${perShare} / หุ้น`;
+      } else {
+        document.getElementById('fin-dividend-rate').textContent = `ปันผลประมาณการ: ยังไม่มีกำไรสุทธิ`;
       }
     }
 
@@ -634,7 +921,13 @@
       btn.textContent = '⏳ กำลังบันทึกลง Google Sheets...';
 
       const prodSelect = document.getElementById('buy-product-id');
-      const opt = prodSelect.selectedOptions[0];
+      const selectedId = prodSelect.value;
+      const targetP = appState.products.find(p => String(p.id) === String(selectedId));
+      const opt = prodSelect.selectedOptions ? prodSelect.selectedOptions[0] : null;
+      const productName = targetP ? targetP.name : (opt && opt.dataset.name ? opt.dataset.name : (opt ? opt.text.split('(')[0].trim() : ''));
+      const productUnit = targetP ? targetP.unit : (opt && opt.dataset.unit ? opt.dataset.unit : 'ตัน');
+      const productCode = targetP ? targetP.code : '';
+
       const qty = parseFloat(document.getElementById('buy-qty').value);
       const price = parseFloat(document.getElementById('buy-price').value);
       const deduction = parseFloat(document.getElementById('buy-deduction').value) || 0;
@@ -643,9 +936,10 @@
       const payload = {
         action: 'buy',
         customer_name: document.getElementById('buy-customer-name').value || 'เกษตรกรทั่วไป',
-        product_name: opt.dataset.name,
+        product_name: productName,
+        product_code: productCode,
         qty: qty,
-        unit: opt.dataset.unit,
+        unit: productUnit,
         unit_price: price,
         moisture: parseFloat(document.getElementById('buy-moisture').value) || 0,
         deduction: deduction,
@@ -668,20 +962,32 @@
         alert('✅ บันทึกในโหมดจำลองเรียบร้อย (เชื่อมต่อ Google Sheets เพื่อบันทึกจริง)');
       }
 
-      // อัปเดตสต็อกและตัวเลขบนหน้าจอทันที ไม่ต้องรอนาน
-      const targetP = appState.products.find(p => p.name === opt.dataset.name);
+      // ปรับปรุงสต็อกในหน้าจอทันที
       if (targetP) {
         targetP.stock_qty = Number((Number(targetP.stock_qty) + qty).toFixed(2));
       }
       appState.buyToday = Number((Number(appState.buyToday) + total).toFixed(2));
       appState.totalBuyAll = Number((Number(appState.totalBuyAll) + total).toFixed(2));
       appState.netProfit = Number((appState.totalSalesAll - appState.totalBuyAll).toFixed(2));
+
+      // เพิ่มประวัติล่าสุด
+      appState.recentTx.unshift({
+        bill_no: 'BUY-' + Date.now().toString().slice(-4),
+        tx_type: 'buy',
+        customer: payload.customer_name,
+        item: productName,
+        qty: qty,
+        unit: productUnit,
+        total_amount: total,
+        tx_date: new Date().toISOString().split('T')[0]
+      });
+
       renderAll();
 
       document.getElementById('buy-form').reset();
       calcBuyTotal();
       btn.disabled = false;
-      btn.textContent = '💾 บันทึกลง Google Sheets ทันที';
+      btn.textContent = '💾 บันทึกลง Google Sheets & เพิ่มสต็อก';
       setTimeout(refreshData, 1500);
       switchTab('dashboard');
     }
@@ -693,7 +999,13 @@
       btn.textContent = '⏳ กำลังบันทึกลง Google Sheets...';
 
       const prodSelect = document.getElementById('sell-product-id');
-      const opt = prodSelect.selectedOptions[0];
+      const selectedId = prodSelect.value;
+      const targetP = appState.products.find(p => String(p.id) === String(selectedId));
+      const opt = prodSelect.selectedOptions ? prodSelect.selectedOptions[0] : null;
+      const productName = targetP ? targetP.name : (opt && opt.dataset.name ? opt.dataset.name : (opt ? opt.text.split('(')[0].trim() : ''));
+      const productUnit = targetP ? targetP.unit : (opt && opt.dataset.unit ? opt.dataset.unit : 'หน่วย');
+      const productCode = targetP ? targetP.code : '';
+
       const qty = parseFloat(document.getElementById('sell-qty').value);
       const price = parseFloat(document.getElementById('sell-price').value);
       const total = qty * price;
@@ -701,9 +1013,10 @@
       const payload = {
         action: 'sell',
         customer_name: document.getElementById('sell-customer-name').value || 'ลูกค้าทั่วไป',
-        product_name: opt.dataset.name,
+        product_name: productName,
+        product_code: productCode,
         qty: qty,
-        unit: opt.dataset.unit,
+        unit: productUnit,
         unit_price: price,
         total_amount: total,
         payment_method: document.querySelector('input[name="payment_method"]:checked').value
@@ -725,14 +1038,26 @@
         alert('✅ บันทึกในโหมดจำลองเรียบร้อย (เชื่อมต่อ Google Sheets เพื่อบันทึกจริง)');
       }
 
-      // อัปเดตสต็อกและตัวเลขบนหน้าจอทันที ไม่ต้องรอนาน
-      const targetP = appState.products.find(p => p.name === opt.dataset.name);
+      // ปรับปรุงสต็อกในหน้าจอทันที
       if (targetP) {
         targetP.stock_qty = Number((Number(targetP.stock_qty) - qty).toFixed(2));
       }
       appState.salesToday = Number((Number(appState.salesToday) + total).toFixed(2));
       appState.totalSalesAll = Number((Number(appState.totalSalesAll) + total).toFixed(2));
       appState.netProfit = Number((appState.totalSalesAll - appState.totalBuyAll).toFixed(2));
+
+      // เพิ่มประวัติล่าสุด
+      appState.recentTx.unshift({
+        bill_no: 'INV-' + Date.now().toString().slice(-4),
+        tx_type: 'sell',
+        customer: payload.customer_name,
+        item: productName,
+        qty: qty,
+        unit: productUnit,
+        total_amount: total,
+        tx_date: new Date().toISOString().split('T')[0]
+      });
+
       renderAll();
 
       document.getElementById('sell-form').reset();
@@ -743,37 +1068,229 @@
       switchTab('dashboard');
     }
 
+    // แสดงรายการคลังสต็อก (พร้อมปุ่มแก้ไขบนมือถือ)
     function renderInventory() {
-      const tbody = document.getElementById('inventory-table-body');
-      tbody.innerHTML = appState.products.map(p => {
+      const cardList = document.getElementById('inventory-card-list');
+      if (!appState.products.length) {
+        cardList.innerHTML = '<p class="text-sm text-slate-400 py-4 text-center">ไม่มีข้อมูลสินค้า</p>';
+        return;
+      }
+
+      cardList.innerHTML = appState.products.map(p => {
         const isLow = p.stock_qty <= p.min_alert;
+        const statusBadge = isLow 
+          ? '<span class="bg-red-100 text-red-700 px-2.5 py-0.5 rounded-full text-xs font-bold">⚠️ ใกล้หมด</span>'
+          : '<span class="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full text-xs font-bold">ปกติ</span>';
+
         return `
-          <tr class="hover:bg-slate-50 border-b border-slate-100">
-            <td class="py-3 px-3 font-semibold text-slate-800">${p.name}</td>
-            <td class="py-3 px-2 text-right font-extrabold text-base ${isLow ? 'text-red-600' : 'text-slate-800'}">${p.stock_qty} ${p.unit}</td>
-            <td class="py-3 px-3 text-right font-bold text-emerald-600">฿${p.sell_price}</td>
-            <td class="py-3 px-2 text-center">
-              ${isLow ? '<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-full text-xs font-bold">ใกล้หมด</span>' : '<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-bold">ปกติ</span>'}
-            </td>
-          </tr>
+          <div class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-500 bg-slate-200 px-2 py-0.5 rounded-md">${p.code || 'P'}</span>
+                <span class="text-xs text-slate-400 font-semibold">${p.category}</span>
+                ${statusBadge}
+              </div>
+              <h4 class="font-bold text-slate-900 text-base sm:text-lg mt-1">${p.name}</h4>
+              <div class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                รับซื้อ: ฿${p.buy_price}/${p.unit} • ขาย: ฿${p.sell_price}/${p.unit}
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-slate-200">
+              <div class="text-left sm:text-right">
+                <span class="text-xs text-slate-400 font-medium">คงเหลือในคลัง</span>
+                <div class="text-xl sm:text-2xl font-black ${isLow ? 'text-red-600' : 'text-slate-800'}">
+                  ${p.stock_qty} <span class="text-sm font-normal text-slate-500">${p.unit}</span>
+                </div>
+              </div>
+              <button onclick="openEditProductModal('${p.code}')" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-2xl transition">
+                ✏️ แก้ไข/ปรับสต็อก
+              </button>
+            </div>
+          </div>
         `;
       }).join('');
     }
 
+    // แสดงสมาชิก (พร้อมปุ่มแก้ไข & ลบ)
     function renderMembers() {
       const listEl = document.getElementById('members-list');
+      if (!appState.members.length) {
+        listEl.innerHTML = '<p class="text-sm text-slate-400 py-4 text-center col-span-2">ยังไม่มีข้อมูลสมาชิก</p>';
+        return;
+      }
+
       listEl.innerHTML = appState.members.map(m => `
-        <div class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-4 space-y-1 shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-blue-800 bg-blue-100 px-2.5 py-1 rounded-lg">${m.member_code}</span>
-            <span class="text-xs sm:text-sm text-slate-600 font-semibold">ถือหุ้น: <b>${m.share_count}</b> หุ้น</span>
+        <div class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-4 space-y-2 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-blue-800 bg-blue-100 px-2.5 py-1 rounded-lg">${m.member_code}</span>
+              <span class="text-xs sm:text-sm text-slate-600 font-semibold">ถือหุ้น: <b>${m.share_count}</b> หุ้น</span>
+            </div>
+            <h4 class="font-extrabold text-slate-800 text-base sm:text-lg mt-1">${m.name}</h4>
+            <p class="text-xs sm:text-sm text-slate-500 font-medium">📞 ${m.phone || '-'} • 📍 ${m.village || '-'}</p>
           </div>
-          <h4 class="font-extrabold text-slate-800 text-base sm:text-lg">${m.name}</h4>
-          <p class="text-xs sm:text-sm text-slate-500 font-medium">📞 ${m.phone || '-'} • 📍 ${m.village || '-'}</p>
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-200">
+            <button onclick="openEditMemberModal('${m.member_code}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-xl transition">
+              ✏️ แก้ไข
+            </button>
+            <button onclick="handleDeleteMember('${m.member_code}', '${m.name}')" class="bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs px-3 py-1.5 rounded-xl transition">
+              🗑️ ลบ
+            </button>
+          </div>
         </div>
       `).join('');
     }
 
+    // 1. เพิ่มสมาชิก
+    function openAddMemberModal() { document.getElementById('add-member-modal').classList.remove('hidden'); }
+    function closeAddMemberModal() { document.getElementById('add-member-modal').classList.add('hidden'); }
+
+    async function handleSaveNewMember(e) {
+      e.preventDefault();
+      const payload = {
+        action: 'addMember',
+        name: document.getElementById('new-member-name').value,
+        phone: document.getElementById('new-member-phone').value,
+        village: document.getElementById('new-member-village').value,
+        share_count: parseInt(document.getElementById('new-member-share').value) || 0
+      };
+
+      if (appState.apiUrl) {
+        try {
+          await fetch(appState.apiUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          alert('✅ เพิ่มสมาชิกใหม่ลง Google Sheets เรียบร้อยแล้ว!');
+        } catch (err) { alert(err.message); }
+      }
+      closeAddMemberModal();
+      setTimeout(refreshData, 1000);
+    }
+
+    // 2. แก้ไขสมาชิก
+    function openEditMemberModal(code) {
+      const m = appState.members.find(x => x.member_code === code);
+      if (!m) return;
+      document.getElementById('edit-member-code').value = m.member_code;
+      document.getElementById('edit-member-name').value = m.name;
+      document.getElementById('edit-member-phone').value = m.phone || '';
+      document.getElementById('edit-member-village').value = m.village || '';
+      document.getElementById('edit-member-share').value = m.share_count || 0;
+      document.getElementById('edit-member-modal').classList.remove('hidden');
+    }
+    function closeEditMemberModal() { document.getElementById('edit-member-modal').classList.add('hidden'); }
+
+    async function handleSaveEditMember(e) {
+      e.preventDefault();
+      const payload = {
+        action: 'editMember',
+        member_code: document.getElementById('edit-member-code').value,
+        name: document.getElementById('edit-member-name').value,
+        phone: document.getElementById('edit-member-phone').value,
+        village: document.getElementById('edit-member-village').value,
+        share_count: parseInt(document.getElementById('edit-member-share').value) || 0
+      };
+
+      if (appState.apiUrl) {
+        try {
+          await fetch(appState.apiUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          alert('✅ อัปเดตข้อมูลสมาชิกใน Google Sheets สำเร็จ!');
+        } catch (err) { alert(err.message); }
+      }
+      closeEditMemberModal();
+      setTimeout(refreshData, 1000);
+    }
+
+    // 3. ลบสมาชิก
+    async function handleDeleteMember(code, name) {
+      if (!confirm(`⚠️ ยืนยันการลบสมาชิก: ${name} (${code}) หรือไม่? ข้อมูลใน Google Sheets จะถูกลบออก`)) {
+        return;
+      }
+
+      if (appState.apiUrl) {
+        try {
+          await fetch(appState.apiUrl, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ action: 'deleteMember', member_code: code }) 
+          });
+          alert('✅ ลบสมาชิกใน Google Sheets เรียบร้อยแล้ว!');
+        } catch (err) { alert(err.message); }
+      }
+      appState.members = appState.members.filter(m => m.member_code !== code);
+      renderMembers();
+      setTimeout(refreshData, 1000);
+    }
+
+    // 4. แก้ไขสินค้า/ปรับสต็อก
+    function openEditProductModal(code) {
+      const p = appState.products.find(x => x.code === code);
+      if (!p) return;
+      document.getElementById('edit-prod-code').value = p.code;
+      document.getElementById('edit-prod-name').value = `${p.name} (${p.unit})`;
+      document.getElementById('edit-prod-buy').value = p.buy_price || 0;
+      document.getElementById('edit-prod-sell').value = p.sell_price || 0;
+      document.getElementById('edit-prod-stock').value = p.stock_qty || 0;
+      document.getElementById('edit-product-modal').classList.remove('hidden');
+    }
+    function closeEditProductModal() { document.getElementById('edit-product-modal').classList.add('hidden'); }
+
+    async function handleSaveEditProduct(e) {
+      e.preventDefault();
+      const code = document.getElementById('edit-prod-code').value;
+      const payload = {
+        action: 'updateProduct',
+        code: code,
+        buy_price: parseFloat(document.getElementById('edit-prod-buy').value) || 0,
+        sell_price: parseFloat(document.getElementById('edit-prod-sell').value) || 0,
+        stock_qty: parseFloat(document.getElementById('edit-prod-stock').value) || 0
+      };
+
+      if (appState.apiUrl) {
+        try {
+          await fetch(appState.apiUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          alert('✅ อัปเดตราคาและสต็อกใน Google Sheets เรียบร้อยแล้ว!');
+        } catch (err) { alert(err.message); }
+      }
+
+      const p = appState.products.find(x => x.code === code);
+      if (p) {
+        p.buy_price = payload.buy_price;
+        p.sell_price = payload.sell_price;
+        p.stock_qty = payload.stock_qty;
+      }
+      renderInventory();
+      closeEditProductModal();
+      setTimeout(refreshData, 1000);
+    }
+
+    // 5. เพิ่มสินค้าใหม่
+    function openAddProductModal() { document.getElementById('add-product-modal').classList.remove('hidden'); }
+    function closeAddProductModal() { document.getElementById('add-product-modal').classList.add('hidden'); }
+
+    async function handleSaveNewProduct(e) {
+      e.preventDefault();
+      const payload = {
+        action: 'addProduct',
+        name: document.getElementById('new-prod-name').value,
+        category: document.getElementById('new-prod-category').value,
+        unit: document.getElementById('new-prod-unit').value,
+        buy_price: parseFloat(document.getElementById('new-prod-buy').value) || 0,
+        sell_price: parseFloat(document.getElementById('new-prod-sell').value) || 0,
+        stock_qty: parseFloat(document.getElementById('new-prod-stock').value) || 0
+      };
+
+      if (appState.apiUrl) {
+        try {
+          await fetch(appState.apiUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          alert('✅ เพิ่มสินค้าใหม่ลงใน Google Sheets สำเร็จแล้ว!');
+        } catch (err) { alert(err.message); }
+      }
+      closeAddProductModal();
+      setTimeout(refreshData, 1000);
+    }
+
+    // ตั้งค่า URL
     function toggleConfigModal() {
       document.getElementById('config-modal').classList.toggle('hidden');
       document.getElementById('sheet-api-url').value = appState.apiUrl;
@@ -785,9 +1302,6 @@
       toggleConfigModal();
       refreshData();
     }
-
-    function openAddMemberModal() { document.getElementById('add-member-modal').classList.remove('hidden'); }
-    function closeAddMemberModal() { document.getElementById('add-member-modal').classList.add('hidden'); }
 
     window.addEventListener('DOMContentLoaded', () => {
       refreshData();
